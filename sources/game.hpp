@@ -30,8 +30,8 @@ namespace ariel {
         virtual ~Game();
 
         std::string logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
-                             const std::string &player2Name,
-                             const std::string &winnerString);
+                            const std::string &player2Name,
+                            const std::string &winnerString);
 
         void playTurn();
 
@@ -43,7 +43,7 @@ namespace ariel {
 
         void printLog();
 
-        void printStats();
+        void printStats() const;
 
         std::vector<std::string> getTurnsLog();
 
@@ -70,8 +70,6 @@ namespace ariel {
         int getWinner() const;
 
         void setWinner(int newWinner);
-
-        int getNumberOfDraws() const;
 
         void setNumberOfDraws(int newNumberOfDraws);
     };

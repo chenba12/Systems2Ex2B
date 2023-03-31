@@ -59,7 +59,7 @@ namespace ariel {
 
         void setIsPlaying(bool playerIsPlaying);
 
-        void removeTopCard();
+        Card &removeAndGetTopCard();
 
         int getNumberOfDraws() const;
 

@@ -45,6 +45,7 @@ bool Game::operator!=(const Game &rhs) const {
     return !(rhs == *this);
 }
 
+
 Game::~Game() = default;
 
 
@@ -81,10 +82,6 @@ void Game::setWinner(int newWinner) {
 }
 
 
-int Game::getNumberOfDraws() const {
-    return numberOfDraws;
-}
-
 void Game::setNumberOfDraws(int newNumberOfDraws) {
     Game::numberOfDraws += newNumberOfDraws;
 }
@@ -117,22 +114,28 @@ void Game::setGameDeck(const std::vector<Card> &newGameDeck) {
 }
 
 void Game::playTurn() {
-    std::string turnLog = "";
-    Card p1Card = player1.getTopCard();
-    Card p2Card = player2.getTopCard();
-    player1.removeTopCard();
-    player2.removeTopCard();
+    std::string turnLog;
+    if (!isPlaying) {
+        throw std::invalid_argument("The game has ended");
+    }
+    bool sizeFLag;
+    bool played = false;
+    Card p1Card = player1.removeAndGetTopCard();
+    Card p2Card = player2.removeAndGetTopCard();
     std::vector<Card> p1ThrownCards;
     p1ThrownCards.push_back(p1Card);
     std::vector<Card> p2ThrownCards;
     p2ThrownCards.push_back(p2Card);
-    int winner = p1Card.checkWinner(p2Card);
+    int turnWinner = p1Card.checkWinner(p2Card);
     this->numberOfTurns++;
     while (true) {
-        switch (winner) {
+        if (player1.getDeckSize() <= 1 || player2.getDeckSize() <= 1) {
+            sizeFLag = true;
+        } else sizeFLag = false;
+        switch (turnWinner) {
             case P1Win:
                 //p1 won
-                player1.setCardsTaken(p1ThrownCards.size() + p2ThrownCards.size());
+                player1.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
                 player1.setNumberOfWins(1);
                 player1.setWinRate(numberOfTurns);
                 player2.setWinRate(numberOfTurns);
@@ -145,7 +148,7 @@ void Game::playTurn() {
                 break;
             case P2Win:
                 //p2 won
-                player1.setCardsTaken(p1ThrownCards.size() + p2ThrownCards.size());
+                player1.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
                 player2.setNumberOfWins(1);
                 player1.setWinRate(numberOfTurns);
                 player2.setWinRate(numberOfTurns);
@@ -158,27 +161,80 @@ void Game::playTurn() {
                 break;
             case Tie:
                 //Tie
+
+                if (sizeFLag && (!played)) {
+                    if (player1.getDeckSize() == 0 || player2.getDeckSize() == 0) {
+                        player1.setCardsTaken(1);
+                        player2.setCardsTaken(1);
+                    } else {
+                        player1.setCardsTaken(2);
+                        player2.setCardsTaken(2);
+                    }
+                    if (player1.getCardsTaken() > player2.getCardsTaken()) {
+                        setWinner(1);
+                    } else {
+                        setWinner(2);
+                    }
+                    return;
+                }
                 player1.setNumberOfDraws(1);
                 player2.setNumberOfDraws(1);
                 player1.setDrawRate(numberOfTurns);
                 player2.setDrawRate(numberOfTurns);
                 setNumberOfDraws(1);
                 turnLog += logTurn(p1Card, p2Card, player1.getPlayerName(), player2.getPlayerName(), "Draw. ");
+                if (sizeFLag) {
+                    std::vector<Card> p1NewDeck;
+                    p1NewDeck.insert(p1NewDeck.end(), player1.getDeck().begin(), player1.getDeck().end());
+                    p1NewDeck.insert(p1NewDeck.end(), p1ThrownCards.begin(), p1ThrownCards.end());
+                    std::vector<Card> p2NewDeck;
+                    p2NewDeck.insert(p2NewDeck.end(), player2.getDeck().begin(), player2.getDeck().end());
+                    p2NewDeck.insert(p2NewDeck.end(), p2ThrownCards.begin(), p2ThrownCards.end());
+                    player1.setDeck(p1NewDeck);
+                    std::vector<Card> gameDeck1 = player1.getDeck();
+                    shuffleDeck(gameDeck1);
+                    player2.setDeck(p2NewDeck);
+                    std::vector<Card> gameDeck2 = player2.getDeck();
+                    shuffleDeck(gameDeck2);
+                    p1ThrownCards.clear();
+                    p2ThrownCards.clear();
+                    p1Card = player1.removeAndGetTopCard();
+                    p1ThrownCards.push_back(p1Card);
+                    p2Card = player2.removeAndGetTopCard();
+                    p2ThrownCards.push_back(p2Card);
+                    turnWinner = p1Card.checkWinner(p2Card);
+                    break;
+                }
+                p1Card = player1.removeAndGetTopCard();
+                p1ThrownCards.push_back(p1Card);
+                p2Card = player2.removeAndGetTopCard();
+                p2ThrownCards.push_back(p2Card);
+                p1Card = player1.removeAndGetTopCard();
+                p2Card = player2.removeAndGetTopCard();
+                p1ThrownCards.push_back(p1Card);
+                p2ThrownCards.push_back(p2Card);
+                break;
+            default:
                 break;
         }
-        if (winner != Tie) break;
-        p1Card = player1.getTopCard();
-        p2Card = player2.getTopCard();
-        winner = p1Card.checkWinner(p2Card);
-        player1.removeTopCard();
-        player2.removeTopCard();
-        p1ThrownCards.push_back(p1Card);
-        p2ThrownCards.push_back(p2Card);
+        if (turnWinner != Tie) {
+            if (player1.getDeckSize() == 0 || player2.getDeckSize() == 0) {
+                if (player1.getCardsTaken() > player2.getCardsTaken()) {
+                    setWinner(1);
+                } else {
+                    setWinner(2);
+                }
+            }
+            break;
+        }
+        turnWinner = p1Card.checkWinner(p2Card);
+        played = true;
     }
 }
 
 void Game::playAll() {
-    while (winner != -1) {
+    while (winner == -1) {
+        std::cout << "hey" << std::endl;
         playTurn();
     }
 }
@@ -217,7 +273,7 @@ void Game::printLog() {
     }
 }
 
-void Game::printStats() {
+void Game::printStats() const {
     std::cout << this->player1 << std::endl;
     std::cout << this->player2 << std::endl;
 }
@@ -225,6 +281,11 @@ void Game::printStats() {
 std::vector<std::string> Game::getTurnsLog() {
     return turnsLog;
 }
+
+//Game::Game()
+//        : gameDeck(), player1(*(new Player())), player2(*(new Player())), turnsLog(),
+//          numberOfTurns(0), isPlaying(false), winner(0), numberOfDraws(0) {
+//}
 
 
 

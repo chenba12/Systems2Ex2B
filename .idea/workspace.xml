@@ -20,16 +20,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="154b7303-8d6f-47ae-9454-18f1538206d2" name="Changes" comment="Game logs and checks">
+    <list default="true" id="154b7303-8d6f-47ae-9454-18f1538206d2" name="Changes" comment="playturn basic">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Demo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Demo.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Demo.o" beforeDir="false" afterPath="$PROJECT_DIR$/Demo.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo" beforeDir="false" afterPath="$PROJECT_DIR$/demo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/card.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/card.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objects/game.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/game.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objects/player.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/player.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/card.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/card.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/card.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/card.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/game.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/game.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/player.cpp" afterDir="false" />
@@ -127,7 +124,7 @@
       <workItem from="1680262849425" duration="86000" />
       <workItem from="1680262958728" duration="309000" />
       <workItem from="1680263282993" duration="94000" />
-      <workItem from="1680263387504" duration="8250000" />
+      <workItem from="1680263387504" duration="16306000" />
     </task>
     <task id="LOCAL-00001" summary="Game logs and checks">
       <created>1680266616013</created>
@@ -136,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680266616014</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="playturn basic">
+      <created>1680271779377</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1680271779377</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +151,7 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <MESSAGE value="Game logs and checks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Game logs and checks" />
+    <MESSAGE value="playturn basic" />
+    <option name="LAST_COMMIT_MESSAGE" value="playturn basic" />
   </component>
 </project>

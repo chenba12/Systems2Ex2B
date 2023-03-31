@@ -1,8 +1,10 @@
 #include "player.hpp"
 
 #include <utility>
+
 #include "string"
 #include "vector"
+
 
 using namespace ariel;
 using namespace std;
@@ -103,11 +105,6 @@ void Player::setIsPlaying(bool playerIsPlaying) {
     Player::isPlaying = playerIsPlaying;
 }
 
-void Player::removeTopCard() {
-    if (!deck.empty()) {
-        deck.erase(deck.begin());
-    }
-}
 
 int Player::getNumberOfDraws() const {
     return numberOfDraws;
@@ -123,12 +120,22 @@ double Player::getDrawRate() const {
 
 void Player::setDrawRate(int turnsPlayed) {
     if (numberOfDraws == 0 || turnsPlayed == 0) {
-        Player::winRate = 0;
+        Player::drawRate = 0;
         return;
     }
     double newDrawRate = (double) numberOfDraws / (double) turnsPlayed * 100.0;
     Player::drawRate = newDrawRate;
 }
+
+
+Card &Player::removeAndGetTopCard() {
+    Card &removedCard = deck.at(0);
+    if (!deck.empty()) {
+        deck.erase(deck.begin());
+    }
+    return removedCard;
+}
+
 
 
 
