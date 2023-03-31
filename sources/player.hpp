@@ -12,10 +12,12 @@ namespace ariel {
         std::vector<Card> deck;
         Card topCard;
         int cardsTaken;
-        int deckSize;
         int numberOfWins;
         double winRate;
+        int numberOfDraws;
+        double drawRate;
         bool isPlaying;
+
     public:
         explicit Player(std::string playerName);
 
@@ -39,8 +41,6 @@ namespace ariel {
 
         const Card &getTopCard() const;
 
-        void setTopCard(const Card &playerTopCard);
-
         int getCardsTaken() const;
 
         void setCardsTaken(int cardsTaken);
@@ -53,11 +53,21 @@ namespace ariel {
 
         double getWinRate() const;
 
-        void setWinRate(double playerWinRate);
+        void setWinRate(int turnsPlayed);
 
         bool getIsPlaying() const;
 
         void setIsPlaying(bool playerIsPlaying);
+
+        void removeTopCard();
+
+        int getNumberOfDraws() const;
+
+        void setNumberOfDraws(int numberOfDraws);
+
+        double getDrawRate() const;
+
+        void setDrawRate(int turnsPlayed);
 
     };
 }

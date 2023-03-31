@@ -86,7 +86,7 @@ int Game::getNumberOfDraws() const {
 }
 
 void Game::setNumberOfDraws(int newNumberOfDraws) {
-    Game::numberOfDraws = newNumberOfDraws;
+    Game::numberOfDraws += newNumberOfDraws;
 }
 
 void Game::generateDeck() {
@@ -98,10 +98,6 @@ void Game::generateDeck() {
             deck.push_back(card);
         }
     }
-    std::cout << "Generated deck: " << std::endl;
-    for (const auto &card: deck) {
-        std::cout << card << std::endl;
-    }
     this->setGameDeck(deck);
 }
 
@@ -110,11 +106,6 @@ void Game::shuffleDeck(std::vector<Card> &deck) {
     std::mt19937 g(rd());
 
     std::shuffle(deck.begin(), deck.end(), g);
-
-    std::cout << "Shuffled deck: " << std::endl;
-    for (const auto &card: deck) {
-        std::cout << card << std::endl;
-    }
 }
 
 const std::vector<Card> &Game::getGameDeck() const {
@@ -126,11 +117,70 @@ void Game::setGameDeck(const std::vector<Card> &newGameDeck) {
 }
 
 void Game::playTurn() {
-
+    std::string turnLog = "";
+    Card p1Card = player1.getTopCard();
+    Card p2Card = player2.getTopCard();
+    player1.removeTopCard();
+    player2.removeTopCard();
+    std::vector<Card> p1ThrownCards;
+    p1ThrownCards.push_back(p1Card);
+    std::vector<Card> p2ThrownCards;
+    p2ThrownCards.push_back(p2Card);
+    int winner = p1Card.checkWinner(p2Card);
+    this->numberOfTurns++;
+    while (true) {
+        switch (winner) {
+            case P1Win:
+                //p1 won
+                player1.setCardsTaken(p1ThrownCards.size() + p2ThrownCards.size());
+                player1.setNumberOfWins(1);
+                player1.setWinRate(numberOfTurns);
+                player2.setWinRate(numberOfTurns);
+                player1.setDrawRate(numberOfTurns);
+                player2.setDrawRate(numberOfTurns);
+                turnLog += logTurn(p1Card, p2Card, player1.getPlayerName(),
+                                   player2.getPlayerName(), player1.getPlayerName() + " Wins. ");
+                turnsLog.push_back(turnLog);
+                turnLog = "";
+                break;
+            case P2Win:
+                //p2 won
+                player1.setCardsTaken(p1ThrownCards.size() + p2ThrownCards.size());
+                player2.setNumberOfWins(1);
+                player1.setWinRate(numberOfTurns);
+                player2.setWinRate(numberOfTurns);
+                player1.setDrawRate(numberOfTurns);
+                player2.setDrawRate(numberOfTurns);
+                turnLog += logTurn(p1Card, p2Card, player1.getPlayerName(),
+                                   player2.getPlayerName(), player2.getPlayerName() + " Wins.");
+                turnsLog.push_back(turnLog);
+                turnLog = "";
+                break;
+            case Tie:
+                //Tie
+                player1.setNumberOfDraws(1);
+                player2.setNumberOfDraws(1);
+                player1.setDrawRate(numberOfTurns);
+                player2.setDrawRate(numberOfTurns);
+                setNumberOfDraws(1);
+                turnLog += logTurn(p1Card, p2Card, player1.getPlayerName(), player2.getPlayerName(), "Draw. ");
+                break;
+        }
+        if (winner != Tie) break;
+        p1Card = player1.getTopCard();
+        p2Card = player2.getTopCard();
+        winner = p1Card.checkWinner(p2Card);
+        player1.removeTopCard();
+        player2.removeTopCard();
+        p1ThrownCards.push_back(p1Card);
+        p2ThrownCards.push_back(p2Card);
+    }
 }
 
 void Game::playAll() {
-
+    while (winner != -1) {
+        playTurn();
+    }
 }
 
 void Game::printWinner() {
@@ -141,20 +191,9 @@ void Game::printWinner() {
     else if (winner == NoWinner) throw std::invalid_argument("Got has not ended...");
 }
 
-void Game::logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name, const std::string &player2Name,
-                   const  std::string &winnerString) {
-//    int turnWInner = p1CardPlayed.checkWinner(p2CardPlayed);
-//    std::string winner = "";
-//    switch (turnWInner) {
-//        case P1Win:
-//            winner = player1Name + " wins.";
-//            break;
-//        case P2Win:
-//            winner = player2Name + " wins.";
-//            break;
-//        case Tie:
-//            winner = "Draw.";
-//            break;
+std::string Game::logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
+                          const std::string &player2Name,
+                          const std::string &winnerString) {
     std::ostringstream ossP1;
     ossP1 << p1CardPlayed;
     std::string p1CardPlayedStr = ossP1.str();
@@ -162,13 +201,9 @@ void Game::logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std
     ossP2 << p2CardPlayed;
     std::string p2CardPlayedStr = ossP2.str();
     std::string log =
-            player1Name + " played " + p1CardPlayedStr + " " + player2Name + " played " + p2CardPlayedStr + "." +
+            player1Name + " played " + p1CardPlayedStr + " " + player2Name + " played " + p2CardPlayedStr + ". " +
             winnerString;
-    turnsLog.push_back(log);
-    // Alice played Queen of Hearts Bob played 5 of Spades. Alice wins.
-//    // Alice played 6 of Hearts Bob played 6 of Spades. Draw.
-//    Alice played 10 of Clubs Bob played 10 of Diamonds. draw.
-//    Alice played Jack of Clubs Bob played King of Diamonds. Bob wins.
+    return log;
 }
 
 void Game::printLastTurn() {
@@ -183,7 +218,8 @@ void Game::printLog() {
 }
 
 void Game::printStats() {
-
+    std::cout << this->player1 << std::endl;
+    std::cout << this->player2 << std::endl;
 }
 
 std::vector<std::string> Game::getTurnsLog() {

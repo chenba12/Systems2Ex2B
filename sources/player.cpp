@@ -9,16 +9,17 @@ using namespace std;
 
 Player::Player(std::string playerName) :
         playerName(std::move(playerName)), isPlaying(false),
-        winRate(0), deckSize(0), cardsTaken(0), numberOfWins(0) {}
+        winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0) {}
 
 Player::Player() : playerName("DefaultName"), isPlaying(false),
-                   winRate(0), deckSize(0), cardsTaken(0), numberOfWins(0) {
+                   winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0) {
 }
 
 std::ostream &ariel::operator<<(std::ostream &os, const Player &player) {
-    os << "playerName: " << player.playerName << " topCard: " << player.topCard
-       << " cardsTaken: " << player.cardsTaken << " deckSize: " << player.deckSize << " numberOfWins: "
-       << player.numberOfWins << " winRate: " << player.winRate << " isPlaying: " << player.isPlaying;
+    os << "playerName: " << player.playerName
+       << " cardsTaken: " << player.cardsTaken << " numberOfWins: "
+       << player.numberOfWins << " winRate: %" << player.winRate << " drawRate: %" << player.drawRate
+       << " amountOfDraws: " << player.numberOfDraws << " isPlaying: " << player.isPlaying;
     return os;
 }
 
@@ -27,7 +28,6 @@ bool Player::operator==(const Player &rhs) const {
            deck == rhs.deck &&
            topCard == rhs.topCard &&
            cardsTaken == rhs.cardsTaken &&
-           deckSize == rhs.deckSize &&
            numberOfWins == rhs.numberOfWins &&
            winRate == rhs.winRate &&
            isPlaying == rhs.isPlaying;
@@ -61,16 +61,12 @@ const Card &Player::getTopCard() const {
     return deck.front();
 }
 
-void Player::setTopCard(const Card &playerTopCard) {
-    Player::topCard = playerTopCard;
-}
-
 int Player::getCardsTaken() const {
     return cardsTaken;
 }
 
 void Player::setCardsTaken(int playerCardsTaken) {
-    Player::cardsTaken = playerCardsTaken;
+    Player::cardsTaken += playerCardsTaken;
 }
 
 unsigned long Player::getDeckSize() const {
@@ -82,16 +78,22 @@ int Player::getNumberOfWins() const {
 }
 
 void Player::setNumberOfWins(int playerNumberOfWins) {
-    Player::numberOfWins = playerNumberOfWins;
+    Player::numberOfWins += playerNumberOfWins;
 }
 
 double Player::getWinRate() const {
     return winRate;
 }
 
-void Player::setWinRate(double playerWinRate) {
-    Player::winRate = playerWinRate;
+void Player::setWinRate(int turnsPlayed) {
+    if (numberOfWins == 0 || turnsPlayed == 0) {
+        Player::winRate = 0;
+        return;
+    }
+    double newWinRate = (double) numberOfWins / (double) turnsPlayed * 100.0;
+    Player::winRate = newWinRate;
 }
+
 
 bool Player::getIsPlaying() const {
     return isPlaying;
@@ -99,6 +101,33 @@ bool Player::getIsPlaying() const {
 
 void Player::setIsPlaying(bool playerIsPlaying) {
     Player::isPlaying = playerIsPlaying;
+}
+
+void Player::removeTopCard() {
+    if (!deck.empty()) {
+        deck.erase(deck.begin());
+    }
+}
+
+int Player::getNumberOfDraws() const {
+    return numberOfDraws;
+}
+
+void Player::setNumberOfDraws(int newNumberOfDraws) {
+    Player::numberOfDraws += newNumberOfDraws;
+}
+
+double Player::getDrawRate() const {
+    return drawRate;
+}
+
+void Player::setDrawRate(int turnsPlayed) {
+    if (numberOfDraws == 0 || turnsPlayed == 0) {
+        Player::winRate = 0;
+        return;
+    }
+    double newDrawRate = (double) numberOfDraws / (double) turnsPlayed * 100.0;
+    Player::drawRate = newDrawRate;
 }
 
 

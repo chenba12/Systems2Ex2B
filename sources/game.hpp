@@ -29,8 +29,9 @@ namespace ariel {
 
         virtual ~Game();
 
-        void logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name, const std::string &player2Name,
-                     const std::string &winnerString);
+        std::string logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
+                             const std::string &player2Name,
+                             const std::string &winnerString);
 
         void playTurn();
 

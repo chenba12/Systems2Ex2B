@@ -45,7 +45,7 @@ namespace ariel {
         ~Card();
 
 
-        int checkWinner(Card &card);
+        int checkWinner(const Card &card) const;
 
         std::string getValue() const;
 

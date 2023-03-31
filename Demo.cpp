@@ -18,11 +18,16 @@ int main() {
     Player p2("Bob");
 //
     Game game(p1, p2);
-    std::cout << game.getGameDeck().size() << std::endl;
-    std::cout << game.getPlayer1().getDeck().size() << std::endl;
-    game.logTurn(p1.getTopCard(), p2.getTopCard(), p1.getPlayerName(), p2.getPlayerName(),"winner");
+    game.playTurn();
+//    std::cout << game.getGameDeck().size() << std::endl;
+//    std::cout << game.getPlayer1().getDeck().size() << std::endl;
+//    game.logTurn(p1.getTopCard(), p2.getTopCard(), p1.getPlayerName(), p2.getPlayerName(), "winner");
+//    game.logTurn(p1.getTopCard(), p2.getTopCard(), p1.getPlayerName(), p2.getPlayerName(), "winner2");
+    game.printLastTurn();
+    game.playTurn();
     game.printLastTurn();
     game.printLog();
+    game.printStats();
 //    for (int i = 0; i < 5; i++) {
 //
 //        game.playTurn();

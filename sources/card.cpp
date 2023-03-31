@@ -34,7 +34,7 @@ bool Card::operator!=(const Card &rhs) const {
 Card::~Card() = default;
 
 
-int Card::checkWinner(Card &p2Card) {
+int Card::checkWinner(const Card &p2Card) const {
     if (this->value == Ace || p2Card.value == Ace) {
         if (this->value == Ace && p2Card.value == Two) return P2Win;
         else if (this->value == Ace && p2Card.value != Two)return P1Win;
