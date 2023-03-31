@@ -29,6 +29,8 @@ namespace ariel {
 
         virtual ~Game();
 
+        void logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name, const std::string &player2Name,
+                     const std::string &winnerString);
 
         void playTurn();
 
@@ -36,7 +38,7 @@ namespace ariel {
 
         void playAll();
 
-        void printWiner();
+        void printWinner();
 
         void printLog();
 
@@ -50,33 +52,27 @@ namespace ariel {
 
         const std::vector<Card> &getGameDeck() const;
 
-        void setGameDeck(const std::vector<Card> &gameDeck);
+        void setGameDeck(const std::vector<Card> &newGameDeck);
 
         Player &getPlayer1() const;
 
-        void setPlayer1(Player &player1);
-
         Player &getPlayer2() const;
-
-        void setPlayer2(Player &player2);
-
-        void setTurnsLog(const std::vector<std::string> &turnsLog);
 
         int getNumberOfTurns() const;
 
-        void setNumberOfTurns(int numberOfTurns);
+        void setNumberOfTurns(int newNumberOfTurns);
 
         bool isPlaying1() const;
 
-        void setIsPlaying(bool isPlaying);
+        void setIsPlaying(bool newIsPlaying);
 
         int getWinner() const;
 
-        void setWinner(int winner);
+        void setWinner(int newWinner);
 
         int getNumberOfDraws() const;
 
-        void setNumberOfDraws(int numberOfDraws);
+        void setNumberOfDraws(int newNumberOfDraws);
     };
 }
 #endif

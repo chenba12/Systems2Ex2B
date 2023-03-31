@@ -58,7 +58,7 @@ void Player::setDeck(const std::vector<Card> &newDeck) {
 }
 
 const Card &Player::getTopCard() const {
-    return topCard;
+    return deck.front();
 }
 
 void Player::setTopCard(const Card &playerTopCard) {
@@ -73,12 +73,8 @@ void Player::setCardsTaken(int playerCardsTaken) {
     Player::cardsTaken = playerCardsTaken;
 }
 
-int Player::getDeckSize() const {
-    return deckSize;
-}
-
-void Player::setDeckSize(int playerGetSize) {
-    Player::deckSize = playerGetSize;
+unsigned long Player::getDeckSize() const {
+    return this->deck.size();
 }
 
 int Player::getNumberOfWins() const {
@@ -97,7 +93,7 @@ void Player::setWinRate(double playerWinRate) {
     Player::winRate = playerWinRate;
 }
 
-bool Player::isPlaying1() const {
+bool Player::getIsPlaying() const {
     return isPlaying;
 }
 

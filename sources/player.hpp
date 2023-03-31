@@ -45,9 +45,7 @@ namespace ariel {
 
         void setCardsTaken(int cardsTaken);
 
-        int getDeckSize() const;
-
-        void setDeckSize(int playerGetSize);
+        unsigned long getDeckSize() const;
 
         int getNumberOfWins() const;
 
@@ -57,7 +55,7 @@ namespace ariel {
 
         void setWinRate(double playerWinRate);
 
-        bool isPlaying1() const;
+        bool getIsPlaying() const;
 
         void setIsPlaying(bool playerIsPlaying);
 

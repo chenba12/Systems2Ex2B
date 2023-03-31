@@ -36,15 +36,15 @@ Card::~Card() = default;
 
 int Card::checkWinner(Card &p2Card) {
     if (this->value == Ace || p2Card.value == Ace) {
-        if (this->value == Ace && p2Card.value == Two) return P2WIN;
-        else if (this->value == Ace && p2Card.value != Two)return P1WIN;
-        else if (this->value == Two && p2Card.value == Ace) return P1WIN;
-        else if (this->value != Two && p2Card.value != Ace)return P2WIN;
-        else if (this->value == Ace && p2Card.value == Ace) return TIE;
+        if (this->value == Ace && p2Card.value == Two) return P2Win;
+        else if (this->value == Ace && p2Card.value != Two)return P1Win;
+        else if (this->value == Two && p2Card.value == Ace) return P1Win;
+        else if (this->value != Two && p2Card.value != Ace)return P2Win;
+        else if (this->value == Ace && p2Card.value == Ace) return Tie;
     }
-    if (this->value > p2Card.value) return P1WIN;
-    else if (this->value == p2Card.value)return TIE;
-    else return P2WIN;
+    if (this->value > p2Card.value) return P1Win;
+    else if (this->value == p2Card.value)return Tie;
+    else return P2Win;
 }
 
 std::string Card::getValue() const {
@@ -52,23 +52,23 @@ std::string Card::getValue() const {
         case Ace:
             return "Ace";
         case Two:
-            return "Two";
+            return "2";
         case Three:
-            return "Three";
+            return "3";
         case Four:
-            return "Four";
+            return "4";
         case Five:
-            return "Five";
+            return "5";
         case Six:
-            return "Six";
+            return "6";
         case Seven:
-            return "Seven";
+            return "7";
         case Eight:
-            return "Eight";
+            return "8";
         case Nine:
-            return "Nine";
+            return "9";
         case Ten:
-            return "Ten";
+            return "10";
         case Jack:
             return "Jack";
         case Queen:

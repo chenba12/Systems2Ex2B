@@ -7,7 +7,7 @@ namespace ariel {
         Hearts = 1, Diamonds = 2, Clubs = 3, Spades = 4
     };
     enum winState {
-        TIE = 0, P1WIN = 1, P2WIN = -1
+        NoWinner = -1, Tie = 0, P1Win = 1, P2Win = 2
     };
     enum cardValues {
         Ace = 1,
