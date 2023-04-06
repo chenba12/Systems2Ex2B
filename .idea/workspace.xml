@@ -11,7 +11,7 @@
   </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="Systems2Ex2B" targetName="Demo.cpp" />
+      <config projectName="benit_systems2_ex2b" targetName="benit_systems2_ex2b" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -20,13 +20,24 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="154b7303-8d6f-47ae-9454-18f1538206d2" name="Changes" comment="playturn basic">
+    <list default="true" id="154b7303-8d6f-47ae-9454-18f1538206d2" name="Changes" comment="implemented everything&#10;not fully tested">
+      <change afterPath="$PROJECT_DIR$/StudentTest1.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestRunner.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Demo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Demo.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Demo.o" beforeDir="false" afterPath="$PROJECT_DIR$/Demo.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo" beforeDir="false" afterPath="$PROJECT_DIR$/demo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Demo.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/doctest.h" beforeDir="false" afterPath="$PROJECT_DIR$/doctest.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grade" beforeDir="false" afterPath="$PROJECT_DIR$/grade" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/objects/card.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/card.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objects/game.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/game.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objects/player.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/player.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/card.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/card.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/card.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/card.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/game.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/game.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/player.cpp" afterDir="false" />
@@ -58,24 +69,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "last_opened_file_path": "/home/chen/CLionProjects/Systems2Ex2B",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/chen/CLionProjects/Systems2Ex2B&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -87,9 +98,10 @@
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Demo.cpp" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Systems2Ex2B" TARGET_NAME="Demo.cpp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Systems2Ex2B" RUN_TARGET_NAME="Demo.cpp">
+    <configuration name="benit_systems2_ex2b" type="CMakeDoctestTestRunConfigurationType" factoryName="doctest Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="benit_systems2_ex2b" TARGET_NAME="benit_systems2_ex2b" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="benit_systems2_ex2b" RUN_TARGET_NAME="benit_systems2_ex2b" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Demo.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hey" TARGET_NAME="Demo.cpp" CONFIG_NAME="Demo.cpp">
@@ -100,7 +112,7 @@
     </configuration>
     <list>
       <item itemvalue="C/C++ File.Demo.cpp" />
-      <item itemvalue="CMake Application.Demo.cpp" />
+      <item itemvalue="Doctest.benit_systems2_ex2b" />
     </list>
     <recent_temporary>
       <list>
@@ -124,7 +136,10 @@
       <workItem from="1680262849425" duration="86000" />
       <workItem from="1680262958728" duration="309000" />
       <workItem from="1680263282993" duration="94000" />
-      <workItem from="1680263387504" duration="16306000" />
+      <workItem from="1680263387504" duration="16537000" />
+      <workItem from="1680349012853" duration="972000" />
+      <workItem from="1680444642568" duration="68000" />
+      <workItem from="1680781092646" duration="7153000" />
     </task>
     <task id="LOCAL-00001" summary="Game logs and checks">
       <created>1680266616013</created>
@@ -140,7 +155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680271779377</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="implemented everything&#10;not fully tested">
+      <created>1680279953006</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1680279953006</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,6 +174,7 @@
     </ignored-roots>
     <MESSAGE value="Game logs and checks" />
     <MESSAGE value="playturn basic" />
-    <option name="LAST_COMMIT_MESSAGE" value="playturn basic" />
+    <MESSAGE value="implemented everything&#10;not fully tested" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented everything&#10;not fully tested" />
   </component>
 </project>

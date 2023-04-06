@@ -17,9 +17,9 @@ Card::Card() {
     this->symbol = Hearts;
 }
 
-std::ostream &ariel::operator<<(std::ostream &os, const Card &card) {
-    os << card.getValue() << " of " << card.getSymbol();
-    return os;
+std::ostream &ariel::operator<<(std::ostream &pos, const Card &card) {
+    pos << card.getValue() << " of " << card.getSymbol();
+    return pos;
 }
 
 bool Card::operator==(const Card &rhs) const {
@@ -32,6 +32,33 @@ bool Card::operator!=(const Card &rhs) const {
 }
 
 Card::~Card() = default;
+
+Card &Card::operator=(const Card &other) {
+    if (this != &other) {
+        this->value = other.value;
+        this->symbol = other.symbol;
+    }
+    return *this;
+}
+
+Card::Card(Card &&other) noexcept {
+    this->value = other.value;
+    this->symbol = other.symbol;
+
+    other.value = Ace;
+    other.symbol = Hearts;
+}
+
+Card &Card::operator=(Card &&other) noexcept {
+    if (this != &other) {
+        this->value = other.value;
+        this->symbol = other.symbol;
+
+        other.value = Ace;
+        other.symbol = Hearts;
+    }
+    return *this;
+}
 
 
 int Card::checkWinner(const Card &p2Card) const {
@@ -81,10 +108,6 @@ std::string Card::getValue() const {
 
 }
 
-void Card::setValue(cardValues newValue) {
-    Card::value = newValue;
-}
-
 std::string Card::getSymbol() const {
     switch (this->symbol) {
         case Hearts:
@@ -100,9 +123,11 @@ std::string Card::getSymbol() const {
     }
 }
 
-void Card::setSymbol(cardSymbols newSymbol) {
-    Card::symbol = newSymbol;
-}
+
+
+
+
+
 
 
 

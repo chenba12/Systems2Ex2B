@@ -21,15 +21,14 @@ namespace ariel {
 
         Game(Player &player1, Player &player2);
 
-        friend std::ostream &operator<<(std::ostream &os, const Game &game);
+        friend std::ostream &operator<<(std::ostream &ostream, const Game &game);
 
         bool operator==(const Game &rhs) const;
 
         bool operator!=(const Game &rhs) const;
 
-        virtual ~Game();
 
-        std::string logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
+        static std::string logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
                             const std::string &player2Name,
                             const std::string &winnerString);
 
@@ -39,7 +38,7 @@ namespace ariel {
 
         void playAll();
 
-        void printWinner();
+        void printWiner();
 
         void printLog();
 
@@ -49,7 +48,7 @@ namespace ariel {
 
         void generateDeck();
 
-        void shuffleDeck(std::vector<Card> &deck);
+        static void shuffleDeck(std::vector<Card> &deck);
 
         const std::vector<Card> &getGameDeck() const;
 
@@ -72,6 +71,10 @@ namespace ariel {
         void setWinner(int newWinner);
 
         void setNumberOfDraws(int newNumberOfDraws);
+
+        void startGame();
+
+        void endGame();
     };
 }
 #endif

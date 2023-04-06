@@ -9,20 +9,21 @@
 using namespace ariel;
 using namespace std;
 
+
 Player::Player(std::string playerName) :
         playerName(std::move(playerName)), isPlaying(false),
-        winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0) {}
+        winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0), id(Player::getNextID()) {}
 
 Player::Player() : playerName("DefaultName"), isPlaying(false),
-                   winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0) {
+                   winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0), id(Player::getNextID()) {
 }
 
-std::ostream &ariel::operator<<(std::ostream &os, const Player &player) {
-    os << "playerName: " << player.playerName
-       << " cardsTaken: " << player.cardsTaken << " numberOfWins: "
-       << player.numberOfWins << " winRate: %" << player.winRate << " drawRate: %" << player.drawRate
-       << " amountOfDraws: " << player.numberOfDraws << " isPlaying: " << player.isPlaying;
-    return os;
+std::ostream &ariel::operator<<(std::ostream &ostream, const Player &player) {
+    ostream << "playerName: " << player.playerName
+            << " cardsTaken: " << player.cardsTaken << " numberOfWins: "
+            << player.numberOfWins << " winRate: %" << player.winRate << " drawRate: %" << player.drawRate
+            << " amountOfDraws: " << player.numberOfDraws << " isPlaying: " << player.isPlaying;
+    return ostream;
 }
 
 bool Player::operator==(const Player &rhs) const {
@@ -39,15 +40,9 @@ bool Player::operator!=(const Player &rhs) const {
     return !(rhs == *this);
 }
 
-Player::~Player() = default;
-
 
 const std::string &Player::getPlayerName() const {
     return playerName;
-}
-
-void Player::setPlayerName(const std::string &newPlayerName) {
-    Player::playerName = newPlayerName;
 }
 
 const std::vector<ariel::Card> &Player::getDeck() const {
@@ -55,15 +50,11 @@ const std::vector<ariel::Card> &Player::getDeck() const {
 }
 
 void Player::setDeck(const std::vector<Card> &newDeck) {
-    for (const auto &i: newDeck)
+    for (const Card &i: newDeck)
         this->deck.push_back(i);
 }
 
-const Card &Player::getTopCard() const {
-    return deck.front();
-}
-
-int Player::getCardsTaken() const {
+int Player::cardesTaken() const {
     return cardsTaken;
 }
 
@@ -71,8 +62,8 @@ void Player::setCardsTaken(int playerCardsTaken) {
     Player::cardsTaken += playerCardsTaken;
 }
 
-unsigned long Player::getDeckSize() const {
-    return this->deck.size();
+int Player::stacksize() const {
+    return (int) this->deck.size();
 }
 
 int Player::getNumberOfWins() const {
@@ -102,7 +93,7 @@ bool Player::getIsPlaying() const {
 }
 
 void Player::setIsPlaying(bool playerIsPlaying) {
-    Player::isPlaying = playerIsPlaying;
+    this->isPlaying = playerIsPlaying;
 }
 
 
@@ -135,6 +126,16 @@ Card &Player::removeAndGetTopCard() {
     }
     return removedCard;
 }
+
+int Player::getID() const {
+    return this->id;
+}
+
+int Player::getNextID() {
+    static int id = 1;
+    return id++;
+}
+
 
 
 

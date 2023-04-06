@@ -8,7 +8,8 @@
 namespace ariel {
     class Player {
     private:
-        std::string playerName;
+        const int id;
+        const std::string playerName;
         std::vector<Card> deck;
         Card topCard;
         int cardsTaken;
@@ -23,29 +24,23 @@ namespace ariel {
 
         Player();
 
-        friend std::ostream &operator<<(std::ostream &os, const Player &player);
+        friend std::ostream &operator<<(std::ostream &ostream, const Player &player);
 
         bool operator==(const Player &rhs) const;
 
         bool operator!=(const Player &rhs) const;
 
-        ~Player();
-
         const std::string &getPlayerName() const;
-
-        void setPlayerName(const std::string &newPlayerName);
 
         const std::vector<Card> &getDeck() const;
 
         void setDeck(const std::vector<Card> &newDeck);
 
-        const Card &getTopCard() const;
-
-        int getCardsTaken() const;
+        int cardesTaken() const;
 
         void setCardsTaken(int cardsTaken);
 
-        unsigned long getDeckSize() const;
+        int stacksize() const;
 
         int getNumberOfWins() const;
 
@@ -69,6 +64,11 @@ namespace ariel {
 
         void setDrawRate(int turnsPlayed);
 
+        int getID() const;
+
+        static int getNextID();
+
     };
 }
+
 #endif

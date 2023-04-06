@@ -36,25 +36,25 @@ namespace ariel {
 
         Card();
 
-        friend std::ostream &operator<<(std::ostream &os, const Card &card);
+        ~Card();
+
+        Card &operator=(const Card &other);
+
+        Card(Card &&other) noexcept;
+
+        Card &operator=(Card &&other) noexcept;
+
+        friend std::ostream &operator<<(std::ostream &pos, const Card &card);
 
         bool operator==(const Card &rhs) const;
 
         bool operator!=(const Card &rhs) const;
 
-        ~Card();
-
-
         int checkWinner(const Card &card) const;
 
         std::string getValue() const;
 
-        void setValue(cardValues newValue);
-
         std::string getSymbol() const;
-
-        void setSymbol(cardSymbols newSymbol);
-
 
     };
 }
