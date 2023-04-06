@@ -139,7 +139,7 @@ void Game::playTurn() {
             case P1Win:
                 //p1 won
                 player1.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
-                player1.setNumberOfWins(1);
+                player1.incrementNumberOfWins(1);
                 player1.setWinRate(numberOfTurns);
                 player2.setWinRate(numberOfTurns);
                 player1.setDrawRate(numberOfTurns);
@@ -152,7 +152,7 @@ void Game::playTurn() {
             case P2Win:
                 //p2 won
                 player2.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
-                player2.setNumberOfWins(1);
+                player2.incrementNumberOfWins(1);
                 player1.setWinRate(numberOfTurns);
                 player2.setWinRate(numberOfTurns);
                 player1.setDrawRate(numberOfTurns);
@@ -175,8 +175,8 @@ void Game::playTurn() {
                     endGame();
                     return;
                 }
-                player1.setNumberOfDraws(1);
-                player2.setNumberOfDraws(1);
+                player1.incrementNumberOfDraws(1);
+                player2.incrementNumberOfDraws(1);
                 player1.setDrawRate(numberOfTurns);
                 player2.setDrawRate(numberOfTurns);
                 setNumberOfDraws(1);
@@ -246,9 +246,9 @@ void Game::playAll() {
 }
 
 void Game::printWiner() {
-    if (winner == Tie) throw std::invalid_argument("Game ended in a tie");
-    else if (winner == P1Win) std::cout << player1.getPlayerName() << std::endl;
-    else if (winner == P2Win) std::cout << player2.getPlayerName() << std::endl;
+    if (winner == Tie) std::cout << "Game ended in a tie" << std::endl;
+    else if (winner == P1Win) std::cout << "Winner:" << player1.getPlayerName() << std::endl;
+    else if (winner == P2Win) std::cout << "Winner:" << player2.getPlayerName() << std::endl;
     else if (winner == NoWinner) std::cout << "Got has not ended..." << std::endl;
 }
 
@@ -279,8 +279,10 @@ void Game::printLog() {
 }
 
 void Game::printStats() const {
+    std::cout << "---------Game Stats---------" << std::endl;
     std::cout << this->getPlayer1() << std::endl;
     std::cout << this->getPlayer2() << std::endl;
+    std::cout << "------------Done------------" << std::endl;
 }
 
 std::vector<std::string> Game::getTurnsLog() {

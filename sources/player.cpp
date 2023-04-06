@@ -29,7 +29,6 @@ std::ostream &ariel::operator<<(std::ostream &ostream, const Player &player) {
 bool Player::operator==(const Player &rhs) const {
     return playerName == rhs.playerName &&
            deck == rhs.deck &&
-           topCard == rhs.topCard &&
            cardsTaken == rhs.cardsTaken &&
            numberOfWins == rhs.numberOfWins &&
            winRate == rhs.winRate &&
@@ -70,7 +69,7 @@ int Player::getNumberOfWins() const {
     return numberOfWins;
 }
 
-void Player::setNumberOfWins(int playerNumberOfWins) {
+void Player::incrementNumberOfWins(int playerNumberOfWins) {
     Player::numberOfWins += playerNumberOfWins;
 }
 
@@ -101,7 +100,7 @@ int Player::getNumberOfDraws() const {
     return numberOfDraws;
 }
 
-void Player::setNumberOfDraws(int newNumberOfDraws) {
+void Player::incrementNumberOfDraws(int newNumberOfDraws) {
     Player::numberOfDraws += newNumberOfDraws;
 }
 

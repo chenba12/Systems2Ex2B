@@ -11,7 +11,6 @@ namespace ariel {
         const int id;
         const std::string playerName;
         std::vector<Card> deck;
-        Card topCard;
         int cardsTaken;
         int numberOfWins;
         double winRate;
@@ -44,7 +43,7 @@ namespace ariel {
 
         int getNumberOfWins() const;
 
-        void setNumberOfWins(int playerNumberOfWins);
+        void incrementNumberOfWins(int playerNumberOfWins);
 
         double getWinRate() const;
 
@@ -58,7 +57,7 @@ namespace ariel {
 
         int getNumberOfDraws() const;
 
-        void setNumberOfDraws(int numberOfDraws);
+        void incrementNumberOfDraws(int numberOfDraws);
 
         double getDrawRate() const;
 

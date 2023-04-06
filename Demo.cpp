@@ -6,11 +6,14 @@
  */
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
+using namespace std;
+
 #include "sources/player.hpp"
 #include "sources/game.hpp"
-
-
-using namespace std;
+#include "sources/card.hpp"
 using namespace ariel;
 
 int main() {
@@ -18,8 +21,8 @@ int main() {
     Player p1("Alice");
     Player p2("Bob");
 
-    Game game(p1, p2);
-    for (int i = 0; i < 5; i++) {
+    Game game(p1,p2);
+    for (int i=0;i<5;i++) {
         game.playTurn();
     }
     game.printLastTurn(); // print the last turn stats. For example:
