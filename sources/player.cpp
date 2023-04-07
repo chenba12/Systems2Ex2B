@@ -22,6 +22,7 @@ Player::Player(std::string playerName) :
 Player::Player() : playerName("DefaultName"), isPlaying(false),
                    winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0), id(Player::getNextID()) {
 }
+
 /**
  *  overwrite the << operator to return a string representation of the player
  */
@@ -139,6 +140,7 @@ int Player::getNextID() {
     static int id = 1;
     return id++;
 }
+
 /**
  * return and removed a card from your deck in order to play it
  * @return the card at the top of the deck
@@ -152,12 +154,6 @@ Card &Player::removeAndGetTopCard() {
 }
 
 
-
-
-
-
-
-
-
-
-
+void Player::clearDeck() {
+    deck.clear();
+}

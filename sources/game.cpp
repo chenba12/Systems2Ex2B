@@ -210,6 +210,8 @@ void Game::playTurn() {
                     } else {
                         player1.setCardsTaken(2);
                         player2.setCardsTaken(2);
+                        player1.removeAndGetTopCard();
+                        player2.removeAndGetTopCard();
                     }
                     endGame();
                     return;
@@ -277,6 +279,8 @@ void Game::endGame() {
     } else {
         setWinner(Tie);
     }
+    player1.clearDeck();
+    player2.clearDeck();
     player1.setIsPlaying(false);
     player2.setIsPlaying(false);
     setIsPlaying(false);
@@ -301,6 +305,7 @@ void Game::printWiner() {
     else if (winner == P2Win) std::cout << "Winner:" << player2.getPlayerName() << std::endl;
     else if (winner == NoWinner) std::cout << "Got has not ended..." << std::endl;
 }
+
 /**
  * Build a string log of the turn and return it
  * @param p1CardPlayed the card that player1 played this turn

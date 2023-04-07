@@ -67,6 +67,8 @@ namespace ariel {
 
         static int getNextID();
 
+        void clearDeck();
+
     };
 }
 
