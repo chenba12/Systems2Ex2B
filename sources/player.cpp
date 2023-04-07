@@ -9,15 +9,22 @@
 using namespace ariel;
 using namespace std;
 
-
+/**
+ * normal constructor
+ */
 Player::Player(std::string playerName) :
         playerName(std::move(playerName)), isPlaying(false),
         winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0), id(Player::getNextID()) {}
 
+/**
+* empty constructor
+*/
 Player::Player() : playerName("DefaultName"), isPlaying(false),
                    winRate(0), cardsTaken(0), numberOfWins(0), drawRate(0), numberOfDraws(0), id(Player::getNextID()) {
 }
-
+/**
+ *  overwrite the << operator to return a string representation of the player
+ */
 std::ostream &ariel::operator<<(std::ostream &ostream, const Player &player) {
     ostream << "playerName: " << player.playerName
             << " cardsTaken: " << player.cardsTaken << " numberOfWins: "
@@ -26,6 +33,11 @@ std::ostream &ariel::operator<<(std::ostream &ostream, const Player &player) {
     return ostream;
 }
 
+/**
+ * check if 2 players are the same based on their data fields
+ * @param rhs the other player
+ * @return true if equal false otherwise
+ */
 bool Player::operator==(const Player &rhs) const {
     return playerName == rhs.playerName &&
            deck == rhs.deck &&
@@ -39,7 +51,9 @@ bool Player::operator!=(const Player &rhs) const {
     return !(rhs == *this);
 }
 
-
+/**
+ * getters and setters
+ */
 const std::string &Player::getPlayerName() const {
     return playerName;
 }
@@ -117,15 +131,6 @@ void Player::setDrawRate(int turnsPlayed) {
     Player::drawRate = newDrawRate;
 }
 
-
-Card &Player::removeAndGetTopCard() {
-    Card &removedCard = deck.at(0);
-    if (!deck.empty()) {
-        deck.erase(deck.begin());
-    }
-    return removedCard;
-}
-
 int Player::getID() const {
     return this->id;
 }
@@ -134,6 +139,19 @@ int Player::getNextID() {
     static int id = 1;
     return id++;
 }
+/**
+ * return and removed a card from your deck in order to play it
+ * @return the card at the top of the deck
+ */
+Card &Player::removeAndGetTopCard() {
+    Card &removedCard = deck.at(0);
+    if (!deck.empty()) {
+        deck.erase(deck.begin());
+    }
+    return removedCard;
+}
+
+
 
 
 

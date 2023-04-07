@@ -10,9 +10,7 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated>
-      <config projectName="benit_systems2_ex2b" targetName="benit_systems2_ex2b" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -20,28 +18,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="154b7303-8d6f-47ae-9454-18f1538206d2" name="Changes" comment="implemented everything&#10;not fully tested">
-      <change afterPath="$PROJECT_DIR$/StudentTest1.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TestRunner.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="154b7303-8d6f-47ae-9454-18f1538206d2" name="Changes" comment="done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Demo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Demo.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Demo.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctest.h" beforeDir="false" afterPath="$PROJECT_DIR$/doctest.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grade" beforeDir="false" afterPath="$PROJECT_DIR$/grade" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/card.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/card.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/game.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/game.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/player.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/player.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/card.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/card.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/card.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/card.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/game.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/game.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/player.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/player.hpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +36,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -92,16 +75,10 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="C/C++ File.Demo.cpp">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="benit_systems2_ex2b" type="CMakeDoctestTestRunConfigurationType" factoryName="doctest Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="benit_systems2_ex2b" TARGET_NAME="benit_systems2_ex2b" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="benit_systems2_ex2b" RUN_TARGET_NAME="benit_systems2_ex2b" TEST_MODE="SUITE_TEST">
+  <component name="RunManager">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-        <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Demo.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hey" TARGET_NAME="Demo.cpp" CONFIG_NAME="Demo.cpp">
@@ -110,10 +87,6 @@
         <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="C/C++ File.Demo.cpp" />
-      <item itemvalue="Doctest.benit_systems2_ex2b" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="C/C++ File.Demo.cpp" />
@@ -139,7 +112,8 @@
       <workItem from="1680263387504" duration="16537000" />
       <workItem from="1680349012853" duration="972000" />
       <workItem from="1680444642568" duration="68000" />
-      <workItem from="1680781092646" duration="7153000" />
+      <workItem from="1680781092646" duration="20678000" />
+      <workItem from="1680857359509" duration="1770000" />
     </task>
     <task id="LOCAL-00001" summary="Game logs and checks">
       <created>1680266616013</created>
@@ -162,11 +136,36 @@
       <option name="project" value="LOCAL" />
       <updated>1680279953006</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="done">
+      <created>1680788784804</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680788784804</updated>
+    </task>
+    <task id="LOCAL-00005" summary="done">
+      <created>1680822779603</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1680822779603</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
@@ -175,6 +174,7 @@
     <MESSAGE value="Game logs and checks" />
     <MESSAGE value="playturn basic" />
     <MESSAGE value="implemented everything&#10;not fully tested" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented everything&#10;not fully tested" />
+    <MESSAGE value="done" />
+    <option name="LAST_COMMIT_MESSAGE" value="done" />
   </component>
 </project>

@@ -14,7 +14,7 @@ namespace ariel {
         std::vector<std::string> turnsLog;
         int numberOfTurns;
         bool isPlaying;
-        int winner;
+        winState winner;
         int numberOfDraws;
 
     public:
@@ -29,8 +29,8 @@ namespace ariel {
 
 
         static std::string logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
-                            const std::string &player2Name,
-                            const std::string &winnerString);
+                                   const std::string &player2Name,
+                                   const std::string &winnerString);
 
         void playTurn();
 
@@ -68,7 +68,7 @@ namespace ariel {
 
         int getWinner() const;
 
-        void setWinner(int newWinner);
+        void setWinner(enum winState newWinner);
 
         void setNumberOfDraws(int newNumberOfDraws);
 

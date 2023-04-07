@@ -7,12 +7,20 @@
 
 using namespace ariel;
 
+/**
+ * normal constructor that init a new game
+ */
 Game::Game(Player &player1, Player &player2) : player1(player1),
-                                               player2(player2), winner(-1), isPlaying(true), numberOfTurns(0),
+                                               player2(player2), winner(NoWinner), isPlaying(true), numberOfTurns(0),
                                                numberOfDraws(0) {
     startGame();
 }
 
+/**
+ * Init a new game
+ * setup a deck of 52 cards and shuffle it and then deal each player a deck of 26 cards
+ *
+ */
 void Game::startGame() {
     generateDeck();
     shuffleDeck(gameDeck);
@@ -27,6 +35,9 @@ void Game::startGame() {
     player2.setIsPlaying(true);
 }
 
+/**
+ *  overwrite the << operator to return a string representation of the game
+ */
 std::ostream &ariel::operator<<(std::ostream &ostream, const Game &game) {
     ostream << "player1: " << game.player1 << " player2: " << game.player2
             << " numberOfTurns: " << game.numberOfTurns << " isPlaying: " << game.isPlaying << " winner: "
@@ -35,6 +46,11 @@ std::ostream &ariel::operator<<(std::ostream &ostream, const Game &game) {
     return ostream;
 }
 
+/**
+ * check if 2 games are the same based on their data fields
+ * @param rhs the other game
+ * @return true if equal false otherwise
+ */
 bool Game::operator==(const Game &rhs) const {
     return player1 == rhs.player1 &&
            player2 == rhs.player2 &&
@@ -49,7 +65,9 @@ bool Game::operator!=(const Game &rhs) const {
     return !(rhs == *this);
 }
 
-
+/**
+ * getter and setters
+ */
 Player &Game::getPlayer1() const {
     return player1;
 }
@@ -78,7 +96,7 @@ int Game::getWinner() const {
     return winner;
 }
 
-void Game::setWinner(int newWinner) {
+void Game::setWinner(enum winState newWinner) {
     Game::winner = newWinner;
 }
 
@@ -87,6 +105,22 @@ void Game::setNumberOfDraws(int newNumberOfDraws) {
     Game::numberOfDraws += newNumberOfDraws;
 }
 
+const std::vector<Card> &Game::getGameDeck() const {
+    return gameDeck;
+}
+
+void Game::setGameDeck(const std::vector<Card> &newGameDeck) {
+    Game::gameDeck = newGameDeck;
+}
+
+std::vector<std::string> Game::getTurnsLog() {
+    return turnsLog;
+}
+
+/**
+ * generate a starting game deck of 52 cards
+ * 4 of each card values 1-13
+ */
 void Game::generateDeck() {
     std::vector<Card> deck;
     for (int i = 1; i <= 13; i++) {
@@ -98,6 +132,10 @@ void Game::generateDeck() {
     this->setGameDeck(deck);
 }
 
+/**
+ * Shuffle a given deck using a built in algorithm in c++
+ * @param deck reference you want to shuffle
+ */
 void Game::shuffleDeck(std::vector<Card> &deck) {
     std::random_device rd;
     std::mt19937 generator(rd());
@@ -105,22 +143,23 @@ void Game::shuffleDeck(std::vector<Card> &deck) {
     std::shuffle(deck.begin(), deck.end(), generator);
 }
 
-const std::vector<Card> &Game::getGameDeck() const {
-    return gameDeck;
-}
-
-void Game::setGameDeck(const std::vector<Card> &newGameDeck) {
-    Game::gameDeck = newGameDeck;
-}
-
+/**
+ * play a turn
+ * remove the top card from both decks and compare them
+ * save the log of that turn
+ * if there is a tie between the 2 cards the turn will continue until there is a winner
+ * if there is a tie the 2 players will put 1 card on the "back" and one faced up
+ * that will be compared against the other player's card
+ * that will happen as long as both players have enough cards to play the "war"
+ */
 void Game::playTurn() {
-    std::string turnLog;
-    if (!isPlaying) {
-        throw std::invalid_argument("The game has ended");
-    }
     if (player1.getID() == player2.getID()) {
         throw std::logic_error("A player can't play with himself.");
     }
+    if (!isPlaying) {
+        throw std::invalid_argument("The game has ended");
+    }
+    std::string turnLog;
     bool sizeFLag;
     bool played = false;
     Card p1Card = player1.removeAndGetTopCard();
@@ -226,6 +265,10 @@ void Game::playTurn() {
     }
 }
 
+/**
+ * set the winner of the game and finish it
+ * after this method is called you can't call playAll() or playTurn() any more
+ */
 void Game::endGame() {
     if (player1.cardesTaken() > player2.cardesTaken()) {
         setWinner(P1Win);
@@ -239,19 +282,34 @@ void Game::endGame() {
     setIsPlaying(false);
 }
 
+/**
+ * Play the game until there is a winner
+ */
 void Game::playAll() {
     while (winner == -1) {
         playTurn();
     }
 }
 
+/**
+ * Print the winner of the game
+ * using the winState enum
+ */
 void Game::printWiner() {
     if (winner == Tie) std::cout << "Game ended in a tie" << std::endl;
     else if (winner == P1Win) std::cout << "Winner:" << player1.getPlayerName() << std::endl;
     else if (winner == P2Win) std::cout << "Winner:" << player2.getPlayerName() << std::endl;
     else if (winner == NoWinner) std::cout << "Got has not ended..." << std::endl;
 }
-
+/**
+ * Build a string log of the turn and return it
+ * @param p1CardPlayed the card that player1 played this turn
+ * @param p2CardPlayed the card that player2 played this turn
+ * @param player1Name  the name of player 1
+ * @param player2Name the name of player 1
+ * @param winnerString a string that says who won this turn
+ * @return a string that represent what happened this turn
+ */
 std::string Game::logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
                           const std::string &player2Name,
                           const std::string &winnerString) {
@@ -267,17 +325,27 @@ std::string Game::logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, co
     return log;
 }
 
+/**
+ * print the last turn
+ */
 void Game::printLastTurn() {
     std::cout << turnsLog.back() << std::endl;
 }
 
+/**
+ * print the full logs of the game
+ */
 void Game::printLog() {
     std::cout << "----------Printing Logs----------" << std::endl;
     for (const auto &turn: turnsLog) {
         std::cout << turn << std::endl;
     }
+    std::cout << "--------------Done-------------" << std::endl;
 }
 
+/**
+ * print the player's statistics like win rate cards taken win rate and so on...
+ */
 void Game::printStats() const {
     std::cout << "---------Game Stats---------" << std::endl;
     std::cout << this->getPlayer1() << std::endl;
@@ -285,9 +353,6 @@ void Game::printStats() const {
     std::cout << "------------Done------------" << std::endl;
 }
 
-std::vector<std::string> Game::getTurnsLog() {
-    return turnsLog;
-}
 
 
 
