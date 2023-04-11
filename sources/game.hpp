@@ -5,16 +5,16 @@
 #include "player.hpp"
 #include "card.hpp"
 #include <vector>
+#include "logger.hpp"
 
 namespace ariel {
     class Game {
         std::vector<Card> gameDeck;
         Player &player1;
         Player &player2;
-        std::vector<std::string> turnsLog;
         int numberOfTurns;
         bool isPlaying;
-        winState winner;
+        Logger logger;
         int numberOfDraws;
 
     public:
@@ -27,24 +27,17 @@ namespace ariel {
 
         bool operator!=(const Game &rhs) const;
 
-
-        static std::string logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
-                                   const std::string &player2Name,
-                                   const std::string &winnerString);
-
         void playTurn();
-
-        void printLastTurn();
 
         void playAll();
 
-        void printWiner();
-
-        void printLog();
-
         void printStats() const;
 
-        std::vector<std::string> getTurnsLog();
+        void printLog() const;
+
+        void printLastTurn() const;
+
+        void printWiner() const;
 
         void generateDeck();
 
@@ -65,10 +58,6 @@ namespace ariel {
         bool isPlaying1() const;
 
         void setIsPlaying(bool newIsPlaying);
-
-        int getWinner() const;
-
-        void setWinner(enum winState newWinner);
 
         void setNumberOfDraws(int newNumberOfDraws);
 

@@ -3,7 +3,6 @@
 #include <vector>
 #include <algorithm>
 #include <random>
-#include <sstream>
 
 using namespace ariel;
 
@@ -11,7 +10,7 @@ using namespace ariel;
  * normal constructor that init a new game
  */
 Game::Game(Player &player1, Player &player2) : player1(player1),
-                                               player2(player2), winner(NoWinner), isPlaying(true), numberOfTurns(0),
+                                               player2(player2), isPlaying(true), numberOfTurns(0),
                                                numberOfDraws(0) {
     startGame();
 }
@@ -41,7 +40,7 @@ void Game::startGame() {
 std::ostream &ariel::operator<<(std::ostream &ostream, const Game &game) {
     ostream << "player1: " << game.player1 << " player2: " << game.player2
             << " numberOfTurns: " << game.numberOfTurns << " isPlaying: " << game.isPlaying << " winner: "
-            << game.winner
+            << game.logger.toString()
             << " numberOfDraws: " << game.numberOfDraws;
     return ostream;
 }
@@ -54,10 +53,8 @@ std::ostream &ariel::operator<<(std::ostream &ostream, const Game &game) {
 bool Game::operator==(const Game &rhs) const {
     return player1 == rhs.player1 &&
            player2 == rhs.player2 &&
-           turnsLog == rhs.turnsLog &&
            numberOfTurns == rhs.numberOfTurns &&
            isPlaying == rhs.isPlaying &&
-           winner == rhs.winner &&
            numberOfDraws == rhs.numberOfDraws;
 }
 
@@ -92,14 +89,6 @@ void Game::setIsPlaying(bool newIsPlaying) {
     Game::isPlaying = newIsPlaying;
 }
 
-int Game::getWinner() const {
-    return winner;
-}
-
-void Game::setWinner(enum winState newWinner) {
-    Game::winner = newWinner;
-}
-
 
 void Game::setNumberOfDraws(int newNumberOfDraws) {
     Game::numberOfDraws += newNumberOfDraws;
@@ -111,10 +100,6 @@ const std::vector<Card> &Game::getGameDeck() const {
 
 void Game::setGameDeck(const std::vector<Card> &newGameDeck) {
     Game::gameDeck = newGameDeck;
-}
-
-std::vector<std::string> Game::getTurnsLog() {
-    return turnsLog;
 }
 
 /**
@@ -183,9 +168,9 @@ void Game::playTurn() {
                 player2.setWinRate(numberOfTurns);
                 player1.setDrawRate(numberOfTurns);
                 player2.setDrawRate(numberOfTurns);
-                turnLog += logTurn(p1Card, p2Card, player1.getPlayerName(),
-                                   player2.getPlayerName(), player1.getPlayerName() + " Wins. ");
-                turnsLog.push_back(turnLog);
+                turnLog += logger.logTurn(p1Card, p2Card, player1.getPlayerName(),
+                                          player2.getPlayerName(), player1.getPlayerName() + " Wins. ");
+                logger.addTurn(turnLog);
                 turnLog = "";
                 break;
             case P2Win:
@@ -196,9 +181,9 @@ void Game::playTurn() {
                 player2.setWinRate(numberOfTurns);
                 player1.setDrawRate(numberOfTurns);
                 player2.setDrawRate(numberOfTurns);
-                turnLog += logTurn(p1Card, p2Card, player1.getPlayerName(),
-                                   player2.getPlayerName(), player2.getPlayerName() + " Wins.");
-                turnsLog.push_back(turnLog);
+                turnLog += logger.logTurn(p1Card, p2Card, player1.getPlayerName(),
+                                          player2.getPlayerName(), player2.getPlayerName() + " Wins.");
+                logger.addTurn(turnLog);
                 turnLog = "";
                 break;
             case Tie:
@@ -221,7 +206,7 @@ void Game::playTurn() {
                 player1.setDrawRate(numberOfTurns);
                 player2.setDrawRate(numberOfTurns);
                 setNumberOfDraws(1);
-                turnLog += logTurn(p1Card, p2Card, player1.getPlayerName(), player2.getPlayerName(), "Draw. ");
+                turnLog += logger.logTurn(p1Card, p2Card, player1.getPlayerName(), player2.getPlayerName(), "Draw. ");
                 if (sizeFLag) {
                     std::vector<Card> p1NewDeck;
                     p1NewDeck.insert(p1NewDeck.end(), player1.getDeck().begin(), player1.getDeck().end());
@@ -273,11 +258,11 @@ void Game::playTurn() {
  */
 void Game::endGame() {
     if (player1.cardesTaken() > player2.cardesTaken()) {
-        setWinner(P1Win);
+        logger.setGameWinner(P1Win);
     } else if (player1.cardesTaken() < player2.cardesTaken()) {
-        setWinner(P2Win);
+        logger.setGameWinner(P2Win);
     } else {
-        setWinner(Tie);
+        logger.setGameWinner(Tie);
     }
     player1.clearDeck();
     player2.clearDeck();
@@ -290,72 +275,37 @@ void Game::endGame() {
  * Play the game until there is a winner
  */
 void Game::playAll() {
-    while (winner == -1) {
+    while (logger.getGameWinner() == NoWinner) {
         playTurn();
     }
 }
 
 /**
- * Print the winner of the game
- * using the winState enum
+ * Calling the logger function printWiner()
  */
-void Game::printWiner() {
-    if (winner == Tie) std::cout << "Game ended in a tie" << std::endl;
-    else if (winner == P1Win) std::cout << "Winner:" << player1.getPlayerName() << std::endl;
-    else if (winner == P2Win) std::cout << "Winner:" << player2.getPlayerName() << std::endl;
-    else if (winner == NoWinner) std::cout << "Got has not ended..." << std::endl;
+void Game::printWiner() const {
+    logger.printWiner(player1, player2);
 }
 
 /**
- * Build a string log of the turn and return it
- * @param p1CardPlayed the card that player1 played this turn
- * @param p2CardPlayed the card that player2 played this turn
- * @param player1Name  the name of player 1
- * @param player2Name the name of player 1
- * @param winnerString a string that says who won this turn
- * @return a string that represent what happened this turn
+ * Calling the logger function printLastTurn()
  */
-std::string Game::logTurn(const Card &p1CardPlayed, const Card &p2CardPlayed, const std::string &player1Name,
-                          const std::string &player2Name,
-                          const std::string &winnerString) {
-    std::ostringstream ossP1;
-    ossP1 << p1CardPlayed;
-    std::string p1CardPlayedStr = ossP1.str();
-    std::ostringstream ossP2;
-    ossP2 << p2CardPlayed;
-    std::string p2CardPlayedStr = ossP2.str();
-    std::string log =
-            player1Name + " played " + p1CardPlayedStr + " " + player2Name + " played " + p2CardPlayedStr + ". " +
-            winnerString;
-    return log;
+void Game::printLastTurn() const {
+    logger.printLastTurn();
 }
 
 /**
- * print the last turn
+ * Calling the logger function printLog()
  */
-void Game::printLastTurn() {
-    std::cout << turnsLog.back() << std::endl;
+void Game::printLog() const {
+    logger.printLog();
 }
 
 /**
- * print the full logs of the game
- */
-void Game::printLog() {
-    std::cout << "----------Printing Logs----------" << std::endl;
-    for (const auto &turn: turnsLog) {
-        std::cout << turn << std::endl;
-    }
-    std::cout << "--------------Done-------------" << std::endl;
-}
-
-/**
- * print the player's statistics like win rate cards taken win rate and so on...
+ * Calling the logger function printStats() with player 1 and player2
  */
 void Game::printStats() const {
-    std::cout << "---------Game Stats---------" << std::endl;
-    std::cout << this->getPlayer1() << std::endl;
-    std::cout << this->getPlayer2() << std::endl;
-    std::cout << "------------Done------------" << std::endl;
+    logger.printStats(player1, player2);
 }
 
 

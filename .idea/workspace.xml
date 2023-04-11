@@ -19,10 +19,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="154b7303-8d6f-47ae-9454-18f1538206d2" name="Changes" comment="done">
+      <change afterPath="$PROJECT_DIR$/sources/logger.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sources/logger.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/player.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/player.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/game.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/game.hpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +67,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/chen/CLionProjects/Systems2Ex2B&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/chen/CLionProjects/CardWar_B-main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -82,9 +83,9 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="Demo.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hey" TARGET_NAME="Demo.cpp" CONFIG_NAME="Demo.cpp">
@@ -119,7 +120,12 @@
       <workItem from="1680349012853" duration="972000" />
       <workItem from="1680444642568" duration="68000" />
       <workItem from="1680781092646" duration="20678000" />
-      <workItem from="1680857359509" duration="3893000" />
+      <workItem from="1680857359509" duration="4696000" />
+      <workItem from="1680862391505" duration="4754000" />
+      <workItem from="1680950433720" duration="402000" />
+      <workItem from="1680950833806" duration="3783000" />
+      <workItem from="1681037866205" duration="606000" />
+      <workItem from="1681219250467" duration="2398000" />
     </task>
     <task id="LOCAL-00001" summary="Game logs and checks">
       <created>1680266616013</created>
@@ -163,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680859150760</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="done">
+      <created>1680861453784</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680861453784</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
