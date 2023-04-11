@@ -69,6 +69,8 @@ namespace ariel {
 
         void clearDeck();
 
+        void resetStats();
+
     };
 }
 

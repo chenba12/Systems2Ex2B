@@ -157,3 +157,12 @@ Card &Player::removeAndGetTopCard() {
 void Player::clearDeck() {
     deck.clear();
 }
+
+void Player::resetStats() {
+    deck.clear();
+    cardsTaken = 0;
+    numberOfWins = 0;
+    winRate = 0;
+    numberOfDraws = 0;
+    drawRate = 0;
+}

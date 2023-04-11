@@ -12,6 +12,12 @@ using namespace ariel;
 Game::Game(Player &player1, Player &player2) : player1(player1),
                                                player2(player2), isPlaying(true), numberOfTurns(0),
                                                numberOfDraws(0) {
+    if (!player1.getIsPlaying()) {
+        player1.resetStats();
+    }
+    if (!player2.getIsPlaying()) {
+        player2.resetStats();
+    }
     startGame();
 }
 
