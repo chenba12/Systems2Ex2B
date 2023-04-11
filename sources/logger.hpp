@@ -14,6 +14,8 @@ namespace ariel {
     class Logger {
     private:
         winState gameWinner;
+        std::string player1Stats;
+        std::string player2Stats;
         std::vector<std::string> turnsLog;
     public:
 
@@ -29,11 +31,11 @@ namespace ariel {
 
         void printLog() const;
 
-        void printStats(const Player &player1, const Player &player2) const;
+        void printStats(const Player &player1, const Player &player2);
 
         winState getGameWinner() const;
 
-        void setGameWinner(winState newWinner);
+        void setGameWinner(winState newWinner, const Player &player1, const Player &player2);
 
         void addTurn(std::string log);
 

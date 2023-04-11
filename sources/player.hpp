@@ -17,7 +17,6 @@ namespace ariel {
         int numberOfDraws;
         double drawRate;
         bool isPlaying;
-
     public:
         explicit Player(std::string playerName);
 

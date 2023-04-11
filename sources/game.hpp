@@ -9,6 +9,7 @@
 
 namespace ariel {
     class Game {
+    private:
         std::vector<Card> gameDeck;
         Player &player1;
         Player &player2;
@@ -31,7 +32,7 @@ namespace ariel {
 
         void playAll();
 
-        void printStats() const;
+        void printStats();
 
         void printLog() const;
 

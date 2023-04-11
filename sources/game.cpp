@@ -264,11 +264,11 @@ void Game::playTurn() {
  */
 void Game::endGame() {
     if (player1.cardesTaken() > player2.cardesTaken()) {
-        logger.setGameWinner(P1Win);
+        logger.setGameWinner(P1Win, player1, player2);
     } else if (player1.cardesTaken() < player2.cardesTaken()) {
-        logger.setGameWinner(P2Win);
+        logger.setGameWinner(P2Win, player1, player2);
     } else {
-        logger.setGameWinner(Tie);
+        logger.setGameWinner(Tie, player1, player2);
     }
     player1.clearDeck();
     player2.clearDeck();
@@ -310,7 +310,7 @@ void Game::printLog() const {
 /**
  * Calling the logger function printStats() with player 1 and player2
  */
-void Game::printStats() const {
+void Game::printStats() {
     logger.printStats(player1, player2);
 }
 
