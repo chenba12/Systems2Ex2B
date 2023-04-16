@@ -149,7 +149,7 @@ void Game::playTurn() {
                 break;
             case P2Win:
                 //p2 won updates the winRate,Cards Taken and add the log
-                P1WinTurn(p1ThrownCards, p2ThrownCards, p1Card, p2Card, turnLog);
+                P2WinTurn(p1ThrownCards, p2ThrownCards, p1Card, p2Card, turnLog);
                 break;
             case Tie:
                 //Tie
@@ -194,7 +194,9 @@ void Game::playTurn() {
                     p2Card = player2.removeAndGetTopCard();
                     p2ThrownCards.push_back(p2Card);
                     turnWinner = p1Card.checkWinner(p2Card);
+                    break;
                 }
+                //tie play throw each player throw 2 cards
                 p1ThrownCards.push_back(player1.removeAndGetTopCard());
                 p2ThrownCards.push_back(player2.removeAndGetTopCard());
                 p1Card = player1.removeAndGetTopCard();
