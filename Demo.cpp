@@ -41,4 +41,5 @@ int main() {
     game.printLastTurn();
     game.printWiner();
     game2.printWiner();
+    return 0;
 }
