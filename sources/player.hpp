@@ -42,7 +42,7 @@ namespace ariel {
 
         int getNumberOfWins() const;
 
-        void incrementNumberOfWins(int playerNumberOfWins);
+        void incrementNumberOfWins();
 
         double getWinRate() const;
 
@@ -56,7 +56,7 @@ namespace ariel {
 
         int getNumberOfDraws() const;
 
-        void incrementNumberOfDraws(int numberOfDraws);
+        void incrementNumberOfDraws();
 
         double getDrawRate() const;
 

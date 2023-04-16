@@ -9,6 +9,11 @@
 using namespace ariel;
 
 /**
+ * CTOR
+ */
+Logger::Logger() : gameWinner(NoWinner) {}
+
+/**
  * print the player's statistics like win rate cards taken win rate and so on...
  */
 void Logger::printStats(const Player &player1, const Player &player2) {
@@ -30,6 +35,7 @@ void Logger::printStats(const Player &player1, const Player &player2) {
  * print the full logs of the game
  */
 void Logger::printLog() const {
+    if (turnsLog.empty()) throw std::logic_error("The game hasn't started yet.");
     std::cout << "----------Printing Logs----------" << std::endl;
     for (const auto &turn: turnsLog) {
         std::cout << turn << std::endl;
@@ -41,7 +47,11 @@ void Logger::printLog() const {
  * print the last turn
  */
 void Logger::printLastTurn() const {
-    std::cout << turnsLog.back() << std::endl;
+    if (!turnsLog.empty()) {
+        std::cout << turnsLog.back() << std::endl;
+    } else {
+        throw std::logic_error("No logs because the game didn't start");
+    }
 }
 
 /**
@@ -83,7 +93,7 @@ winState Logger::getGameWinner() const {
     return gameWinner;
 }
 
-void Logger::setGameWinner(winState newWinner, const Player &player1,const Player &player2) {
+void Logger::setGameWinner(winState newWinner, const Player &player1, const Player &player2) {
     if (newWinner != NoWinner) {
         std::ostringstream ossP1;
         ossP1 << player1;
@@ -113,4 +123,3 @@ std::string Logger::toString() const {
     return str;
 }
 
-Logger::Logger() : gameWinner(NoWinner) {}

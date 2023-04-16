@@ -24,9 +24,9 @@ namespace ariel {
 
         friend std::ostream &operator<<(std::ostream &ostream, const Game &game);
 
-        bool operator==(const Game &rhs) const;
+        bool operator==(const Game &otherGame) const;
 
-        bool operator!=(const Game &rhs) const;
+        bool operator!=(const Game &otherGame) const;
 
         void playTurn();
 
@@ -40,31 +40,28 @@ namespace ariel {
 
         void printWiner() const;
 
+    private:
         void generateDeck();
 
         static void shuffleDeck(std::vector<Card> &deck);
 
-        const std::vector<Card> &getGameDeck() const;
-
         void setGameDeck(const std::vector<Card> &newGameDeck);
 
-        Player &getPlayer1() const;
-
-        Player &getPlayer2() const;
-
-        int getNumberOfTurns() const;
-
         void setNumberOfTurns(int newNumberOfTurns);
-
-        bool isPlaying1() const;
-
-        void setIsPlaying(bool newIsPlaying);
-
-        void setNumberOfDraws(int newNumberOfDraws);
 
         void startGame();
 
         void endGame();
+
+        void
+        P1WinTurn(const std::vector<Card> &p1ThrownCards, const std::vector<Card> &p2ThrownCards, const Card &p1Card,
+                  const Card &p2Card,
+                  std::string &turnLog);
+
+        void
+        P2WinTurn(const std::vector<Card> &p1ThrownCards, const std::vector<Card> &p2ThrownCards, const Card &p1Card,
+                  const Card &p2Card,
+                  std::string &turnLog);
     };
 }
 #endif

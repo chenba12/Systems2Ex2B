@@ -18,7 +18,9 @@ Game::Game(Player &player1, Player &player2) : player1(player1),
     if (!player2.getIsPlaying()) {
         player2.resetStats();
     }
-    startGame();
+    if (!player1.getIsPlaying() && !player2.getIsPlaying()) {
+        startGame();
+    }
 }
 
 /**
@@ -36,8 +38,6 @@ void Game::startGame() {
     if (player1.getIsPlaying() || player2.getIsPlaying()) {
         throw std::logic_error("Players are already playing another game.");
     }
-    player1.setIsPlaying(true);
-    player2.setIsPlaying(true);
 }
 
 /**
@@ -53,55 +53,27 @@ std::ostream &ariel::operator<<(std::ostream &ostream, const Game &game) {
 
 /**
  * check if 2 games are the same based on their data fields
- * @param rhs the other game
+ * @param otherGame the other game
  * @return true if equal false otherwise
  */
-bool Game::operator==(const Game &rhs) const {
-    return player1 == rhs.player1 &&
-           player2 == rhs.player2 &&
-           numberOfTurns == rhs.numberOfTurns &&
-           isPlaying == rhs.isPlaying &&
-           numberOfDraws == rhs.numberOfDraws;
+bool Game::operator==(const Game &otherGame) const {
+    return player1 == otherGame.player1 &&
+           player2 == otherGame.player2 &&
+           numberOfTurns == otherGame.numberOfTurns &&
+           isPlaying == otherGame.isPlaying &&
+           numberOfDraws == otherGame.numberOfDraws;
 }
 
-bool Game::operator!=(const Game &rhs) const {
-    return !(rhs == *this);
+bool Game::operator!=(const Game &otherGame) const {
+    return !(otherGame == *this);
 }
 
 /**
  * getter and setters
  */
-Player &Game::getPlayer1() const {
-    return player1;
-}
-
-Player &Game::getPlayer2() const {
-    return player2;
-}
-
-int Game::getNumberOfTurns() const {
-    return numberOfTurns;
-}
 
 void Game::setNumberOfTurns(int newNumberOfTurns) {
     Game::numberOfTurns += newNumberOfTurns;
-}
-
-bool Game::isPlaying1() const {
-    return isPlaying;
-}
-
-void Game::setIsPlaying(bool newIsPlaying) {
-    Game::isPlaying = newIsPlaying;
-}
-
-
-void Game::setNumberOfDraws(int newNumberOfDraws) {
-    Game::numberOfDraws += newNumberOfDraws;
-}
-
-const std::vector<Card> &Game::getGameDeck() const {
-    return gameDeck;
 }
 
 void Game::setGameDeck(const std::vector<Card> &newGameDeck) {
@@ -130,7 +102,6 @@ void Game::generateDeck() {
 void Game::shuffleDeck(std::vector<Card> &deck) {
     std::random_device rd;
     std::mt19937 generator(rd());
-
     std::shuffle(deck.begin(), deck.end(), generator);
 }
 
@@ -144,11 +115,17 @@ void Game::shuffleDeck(std::vector<Card> &deck) {
  * that will happen as long as both players have enough cards to play the "war"
  */
 void Game::playTurn() {
-    if (player1.getID() == player2.getID()) {
+    if (player1.getID() == player2.getID() || &player1 == &player2) {
         throw std::logic_error("A player can't play with himself.");
     }
     if (!isPlaying) {
         throw std::invalid_argument("The game has ended");
+    }
+    if (numberOfTurns == 0 && (player1.getIsPlaying() || player2.getIsPlaying())) {
+        throw std::logic_error("Player already registered to another game");
+    } else {
+        player1.setIsPlaying(true);
+        player2.setIsPlaying(true);
     }
     std::string turnLog;
     bool sizeFLag;
@@ -167,34 +144,18 @@ void Game::playTurn() {
         } else sizeFLag = false;
         switch (turnWinner) {
             case P1Win:
-                //p1 won
-                player1.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
-                player1.incrementNumberOfWins(1);
-                player1.setWinRate(numberOfTurns);
-                player2.setWinRate(numberOfTurns);
-                player1.setDrawRate(numberOfTurns);
-                player2.setDrawRate(numberOfTurns);
-                turnLog += logger.logTurn(p1Card, p2Card, player1.getPlayerName(),
-                                          player2.getPlayerName(), player1.getPlayerName() + " Wins. ");
-                logger.addTurn(turnLog);
-                turnLog = "";
+                //p1 won updates the winRate,Cards Taken and add the log
+                P1WinTurn(p1ThrownCards, p2ThrownCards, p1Card, p2Card, turnLog);
                 break;
             case P2Win:
-                //p2 won
-                player2.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
-                player2.incrementNumberOfWins(1);
-                player1.setWinRate(numberOfTurns);
-                player2.setWinRate(numberOfTurns);
-                player1.setDrawRate(numberOfTurns);
-                player2.setDrawRate(numberOfTurns);
-                turnLog += logger.logTurn(p1Card, p2Card, player1.getPlayerName(),
-                                          player2.getPlayerName(), player2.getPlayerName() + " Wins.");
-                logger.addTurn(turnLog);
-                turnLog = "";
+                //p2 won updates the winRate,Cards Taken and add the log
+                P1WinTurn(p1ThrownCards, p2ThrownCards, p1Card, p2Card, turnLog);
                 break;
             case Tie:
                 //Tie
                 if (sizeFLag && (!played)) {
+                    //tie with not enough cards to play war
+                    // add the hand+thrown card size to cardsTaken and finish the game
                     if (player1.stacksize() == 0 || player2.stacksize() == 0) {
                         player1.setCardsTaken(1);
                         player2.setCardsTaken(1);
@@ -207,13 +168,15 @@ void Game::playTurn() {
                     endGame();
                     return;
                 }
-                player1.incrementNumberOfDraws(1);
-                player2.incrementNumberOfDraws(1);
+                player1.incrementNumberOfDraws();
+                player2.incrementNumberOfDraws();
                 player1.setDrawRate(numberOfTurns);
                 player2.setDrawRate(numberOfTurns);
-                setNumberOfDraws(1);
+                numberOfDraws++;
                 turnLog += logger.logTurn(p1Card, p2Card, player1.getPlayerName(), player2.getPlayerName(), "Draw. ");
                 if (sizeFLag) {
+                    //Not enough cards to play war but there have been wars previously
+                    // shuffle the cards thrown with the cards in hand and restart the turn
                     std::vector<Card> p1NewDeck;
                     p1NewDeck.insert(p1NewDeck.end(), player1.getDeck().begin(), player1.getDeck().end());
                     p1NewDeck.insert(p1NewDeck.end(), p1ThrownCards.begin(), p1ThrownCards.end());
@@ -221,11 +184,9 @@ void Game::playTurn() {
                     p2NewDeck.insert(p2NewDeck.end(), player2.getDeck().begin(), player2.getDeck().end());
                     p2NewDeck.insert(p2NewDeck.end(), p2ThrownCards.begin(), p2ThrownCards.end());
                     player1.setDeck(p1NewDeck);
-                    std::vector<Card> gameDeck1 = player1.getDeck();
-                    shuffleDeck(gameDeck1);
+                    shuffleDeck(p1NewDeck);
                     player2.setDeck(p2NewDeck);
-                    std::vector<Card> gameDeck2 = player2.getDeck();
-                    shuffleDeck(gameDeck2);
+                    shuffleDeck(p2NewDeck);
                     p1ThrownCards.clear();
                     p2ThrownCards.clear();
                     p1Card = player1.removeAndGetTopCard();
@@ -233,12 +194,9 @@ void Game::playTurn() {
                     p2Card = player2.removeAndGetTopCard();
                     p2ThrownCards.push_back(p2Card);
                     turnWinner = p1Card.checkWinner(p2Card);
-                    break;
                 }
-                p1Card = player1.removeAndGetTopCard();
-                p1ThrownCards.push_back(p1Card);
-                p2Card = player2.removeAndGetTopCard();
-                p2ThrownCards.push_back(p2Card);
+                p1ThrownCards.push_back(player1.removeAndGetTopCard());
+                p2ThrownCards.push_back(player2.removeAndGetTopCard());
                 p1Card = player1.removeAndGetTopCard();
                 p2Card = player2.removeAndGetTopCard();
                 p1ThrownCards.push_back(p1Card);
@@ -258,6 +216,35 @@ void Game::playTurn() {
     }
 }
 
+void Game::P1WinTurn(const std::vector<Card> &p1ThrownCards, const std::vector<Card> &p2ThrownCards, const Card &p1Card,
+                     const Card &p2Card,
+                     std::string &turnLog) {
+    player1.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
+    player1.incrementNumberOfWins();
+    player1.setWinRate(numberOfTurns);
+    player2.setWinRate(numberOfTurns);
+    player1.setDrawRate(numberOfTurns);
+    player2.setDrawRate(numberOfTurns);
+    turnLog += logger.logTurn(p1Card, p2Card, player1.getPlayerName(),
+                              player2.getPlayerName(), player1.getPlayerName() + " Wins. ");
+    logger.addTurn(turnLog);
+    turnLog = "";
+}
+
+void Game::P2WinTurn(const std::vector<Card> &p1ThrownCards, const std::vector<Card> &p2ThrownCards, const Card &p1Card,
+                     const Card &p2Card, std::string &turnLog) {
+    player2.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
+    player2.incrementNumberOfWins();
+    player1.setWinRate(numberOfTurns);
+    player2.setWinRate(numberOfTurns);
+    player1.setDrawRate(numberOfTurns);
+    player2.setDrawRate(numberOfTurns);
+    turnLog += logger.logTurn(p1Card, p2Card, player1.getPlayerName(),
+                              player2.getPlayerName(), player2.getPlayerName() + " Wins.");
+    logger.addTurn(turnLog);
+    turnLog = "";
+}
+
 /**
  * set the winner of the game and finish it
  * after this method is called you can't call playAll() or playTurn() any more
@@ -274,13 +261,14 @@ void Game::endGame() {
     player2.clearDeck();
     player1.setIsPlaying(false);
     player2.setIsPlaying(false);
-    setIsPlaying(false);
+    isPlaying = false;
 }
 
 /**
  * Play the game until there is a winner
  */
 void Game::playAll() {
+    if (logger.getGameWinner() != NoWinner) throw std::logic_error("game has ended");
     while (logger.getGameWinner() == NoWinner) {
         playTurn();
     }
@@ -313,8 +301,6 @@ void Game::printLog() const {
 void Game::printStats() {
     logger.printStats(player1, player2);
 }
-
-
 
 
 

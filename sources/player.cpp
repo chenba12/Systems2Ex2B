@@ -64,8 +64,7 @@ const std::vector<ariel::Card> &Player::getDeck() const {
 }
 
 void Player::setDeck(const std::vector<Card> &newDeck) {
-    for (const Card &i: newDeck)
-        this->deck.push_back(i);
+    Player::deck = newDeck;
 }
 
 int Player::cardesTaken() const {
@@ -84,8 +83,8 @@ int Player::getNumberOfWins() const {
     return numberOfWins;
 }
 
-void Player::incrementNumberOfWins(int playerNumberOfWins) {
-    Player::numberOfWins += playerNumberOfWins;
+void Player::incrementNumberOfWins() {
+    Player::numberOfWins++;
 }
 
 double Player::getWinRate() const {
@@ -115,8 +114,8 @@ int Player::getNumberOfDraws() const {
     return numberOfDraws;
 }
 
-void Player::incrementNumberOfDraws(int newNumberOfDraws) {
-    Player::numberOfDraws += newNumberOfDraws;
+void Player::incrementNumberOfDraws() {
+    Player::numberOfDraws++;
 }
 
 double Player::getDrawRate() const {
