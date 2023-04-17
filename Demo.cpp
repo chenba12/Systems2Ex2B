@@ -1,25 +1,12 @@
-/**
- * Demo file for the exercise on binary tree
- *
- * @author Evgeny Hershkovitch Neiterman
- * @since 2023-03
- */
-
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <stdexcept>
-
-using namespace std;
-
 #include "sources/player.hpp"
 #include "sources/game.hpp"
 #include "sources/card.hpp"
 
+using namespace std;
 using namespace ariel;
 
 int main() {
-    // Create two players with their names
     Player p1("Alice");
     Player p2("Bob");
 
@@ -27,19 +14,29 @@ int main() {
     for (int i = 0; i < 5; i++) {
         game.playTurn();
     }
+    game.printLastTurn();
     game.playAll();
     game.printLog();
+
     //Play another game after the game ended
     Game game2(p1, p2);
     game2.playAll();
 
     //shows that both statistics are different according to the turns in the game
-    game2.printStats();
+    cout << "Game 1 printStats:" << endl;
     game.printStats();
+    cout << "Game 2 printStats:" << endl;
+    game2.printStats();
 
-    game2.printLastTurn();
+
+    cout << "Game 1 printLastTurn:" << endl;
     game.printLastTurn();
+    cout << "Game 2 printLastTurn:" << endl;
+    game2.printLastTurn();
+
+    cout << "Game 1 winner:" << endl;
     game.printWiner();
+    cout << "Game 2 winner:" << endl;
     game2.printWiner();
     return 0;
 }

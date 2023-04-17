@@ -47,7 +47,7 @@ namespace ariel {
 
         void setGameDeck(const std::vector<Card> &newGameDeck);
 
-        void setNumberOfTurns(int newNumberOfTurns);
+        void setNumberOfTurns();
 
         void startGame();
 

@@ -33,6 +33,7 @@ void Logger::printStats(const Player &player1, const Player &player2) {
 
 /**
  * print the full logs of the game
+ * @throws logic_error if the game log is empty
  */
 void Logger::printLog() const {
     if (turnsLog.empty()) throw std::logic_error("The game hasn't started yet.");
@@ -45,6 +46,7 @@ void Logger::printLog() const {
 
 /**
  * print the last turn
+ * @throws logic_error if the game log is empty
  */
 void Logger::printLastTurn() const {
     if (!turnsLog.empty()) {
@@ -89,10 +91,20 @@ void Logger::printWiner(const Player &player1, const Player &player2) const {
     else if (gameWinner == NoWinner) std::cout << "Got has not ended..." << std::endl;
 }
 
+/**
+ * @return gameWinner
+ */
 winState Logger::getGameWinner() const {
     return gameWinner;
 }
 
+/**
+ * set the game winner and save the stats of each player for later use
+ * this function is called at the end of the game
+ * @param newWinner the winner
+ * @param player1 reference
+ * @param player2 reference
+ */
 void Logger::setGameWinner(winState newWinner, const Player &player1, const Player &player2) {
     if (newWinner != NoWinner) {
         std::ostringstream ossP1;
@@ -105,10 +117,17 @@ void Logger::setGameWinner(winState newWinner, const Player &player1, const Play
     Logger::gameWinner = newWinner;
 }
 
+/**
+ * add a turn(log) to the logger
+ * @param log
+ */
 void Logger::addTurn(std::string log) {
     turnsLog.push_back(log);
 }
 
+/**
+ * @return a string representation of who won the game
+ */
 std::string Logger::toString() const {
     std::string str;
     if (gameWinner == Tie) {

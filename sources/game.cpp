@@ -26,7 +26,7 @@ Game::Game(Player &player1, Player &player2) : player1(player1),
 /**
  * Init a new game
  * setup a deck of 52 cards and shuffle it and then deal each player a deck of 26 cards
- *
+ * @throws logic_error if the players are playing another game already
  */
 void Game::startGame() {
     generateDeck();
@@ -72,10 +72,18 @@ bool Game::operator!=(const Game &otherGame) const {
  * getter and setters
  */
 
-void Game::setNumberOfTurns(int newNumberOfTurns) {
-    Game::numberOfTurns += newNumberOfTurns;
+/**
+ * increment the number of turns by 1
+ * @param newNumberOfTurns
+ */
+void Game::setNumberOfTurns() {
+    Game::numberOfTurns++;
 }
 
+/**
+ * set a new game deck
+ * @param newGameDeck
+ */
 void Game::setGameDeck(const std::vector<Card> &newGameDeck) {
     Game::gameDeck = newGameDeck;
 }
@@ -113,13 +121,17 @@ void Game::shuffleDeck(std::vector<Card> &deck) {
  * if there is a tie the 2 players will put 1 card on the "back" and one faced up
  * that will be compared against the other player's card
  * that will happen as long as both players have enough cards to play the "war"
+ * @throws logic_error happens with 3 cases
+ * 1) if both players are the same
+ * 2) the game ended
+ * 3)Players already registered to another game
  */
 void Game::playTurn() {
     if (player1.getID() == player2.getID() || &player1 == &player2) {
         throw std::logic_error("A player can't play with himself.");
     }
     if (!isPlaying) {
-        throw std::invalid_argument("The game has ended");
+        throw std::logic_error("The game has ended");
     }
     if (numberOfTurns == 0 && (player1.getIsPlaying() || player2.getIsPlaying())) {
         throw std::logic_error("Player already registered to another game");
@@ -137,7 +149,7 @@ void Game::playTurn() {
     std::vector<Card> p2ThrownCards;
     p2ThrownCards.push_back(p2Card);
     int turnWinner = p1Card.checkWinner(p2Card);
-    this->setNumberOfTurns(1);
+    this->setNumberOfTurns();
     while (true) {
         if (player1.stacksize() <= 1 || player2.stacksize() <= 1) {
             sizeFLag = true;
@@ -218,6 +230,17 @@ void Game::playTurn() {
     }
 }
 
+/**
+ * player 1 won this turn
+ * increase the amount of cards taken
+ * set both player win rate and draw rate
+ * and add the turn to the logger
+ * @param p1ThrownCards the cards that player1 threw in this turn
+ * @param p2ThrownCards the cards that player2 threw in this turn
+ * @param p1Card the last card that player1 threw this turn
+ * @param p2Card the last card that player2 threw this turn
+ * @param turnLog a string that represent what happened this turn (won't be empty if there was a draw)
+ */
 void Game::P1WinTurn(const std::vector<Card> &p1ThrownCards, const std::vector<Card> &p2ThrownCards, const Card &p1Card,
                      const Card &p2Card,
                      std::string &turnLog) {
@@ -233,6 +256,18 @@ void Game::P1WinTurn(const std::vector<Card> &p1ThrownCards, const std::vector<C
     turnLog = "";
 }
 
+
+/**
+ * player 2 won this turn
+ * increase the amount of cards taken
+ * set both player win rate and draw rate
+ * and add the turn to the logger
+ * @param p1ThrownCards the cards that player1 threw in this turn
+ * @param p2ThrownCards the cards that player2 threw in this turn
+ * @param p1Card the last card that player1 threw this turn
+ * @param p2Card the last card that player2 threw this turn
+ * @param turnLog a string that represent what happened this turn (won't be empty if there was a draw)
+ */
 void Game::P2WinTurn(const std::vector<Card> &p1ThrownCards, const std::vector<Card> &p2ThrownCards, const Card &p1Card,
                      const Card &p2Card, std::string &turnLog) {
     player2.setCardsTaken((int) (p1ThrownCards.size() + p2ThrownCards.size()));
@@ -268,6 +303,7 @@ void Game::endGame() {
 
 /**
  * Play the game until there is a winner
+ * @throws logic_error if trying to play again after the game ended
  */
 void Game::playAll() {
     if (logger.getGameWinner() != NoWinner) throw std::logic_error("game has ended");
